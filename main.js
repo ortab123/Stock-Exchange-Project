@@ -1,5 +1,6 @@
 import { SearchForm } from "./controller/searchForm.js";
 import { SearchResult } from "./controller/searchResult.js";
+import { Marquee } from "./controller/marquee.js";
 import { mockCompanies } from "./models/mockData.js";
 // import { API_KEY } from "./secret.js";
 
@@ -7,8 +8,13 @@ const form = new SearchForm(document.getElementById("form"));
 const results = new SearchResult(document.getElementById("results"));
 const loadingElement = document.getElementById("loading");
 
+const marquee = new Marquee(document.getElementById("marquee"));
+marquee.loadAndRender();
+
 form.onSearch((companies) => {
+  loadingElement.style.display = "block";
   results.renderResults(companies);
+  loadingElement.style.display = "none";
 });
 
 // form.onSearch(async (query) => {
