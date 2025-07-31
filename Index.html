@@ -5,8 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Stock Exchange</title>
     <link rel="stylesheet" href="styles/IndexStyle.css" />
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
   </head>
   <body>
+    <div id="marquee-container">
+      <div id="marquee-content"></div>
+    </div>
     <div class="container">
       <h1>Search Nasdaq Stock</h1>
 
@@ -20,6 +24,7 @@
         <ul id="stockList"></ul>
       </div>
     </div>
+    <script type="module" src="controller/marquee.js"></script>
     <script type="module" src="main.js"></script>
   </body>
 </html>
