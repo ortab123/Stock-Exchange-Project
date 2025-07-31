@@ -1,0 +1,79 @@
+body {
+  font-family: "Open Sans", sans-serif;
+  margin: 0;
+  padding: 30px;
+  color: #333;
+  display: flex;
+  justify-content: center;
+}
+
+.company-container {
+  max-width: 800px;
+  width: 100%;
+  background-color: white;
+  padding: 30px;
+  border-radius: 12px;
+}
+
+.company-header {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.company-logo {
+  width: 60px;
+  height: 60px;
+  object-fit: contain;
+}
+
+.company-name {
+  font-size: 24px;
+  color: #2c3e50;
+}
+
+.company-name a {
+  text-decoration: none;
+  color: #2c3e50;
+}
+
+.company-name a:hover {
+  text-decoration: underline;
+}
+
+.stock-info {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.stock-price {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.stock-change {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.stock-change.positive {
+  color: #4dcb77;
+}
+
+.stock-change.negative {
+  color: #e62b3e;
+}
+
+.company-description {
+  font-size: 16px;
+  line-height: 1.5;
+  margin-bottom: 30px;
+}
+
+canvas {
+  width: 100% !important;
+  height: 100% !important;
+}
