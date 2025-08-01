@@ -5,9 +5,14 @@ export class SearchResult {
     this.stockListElement = document.createElement("ul");
     this.stockListElement.id = "stockList";
     this.containerElement.appendChild(this.stockListElement);
+    this.compareCallback = null;
   }
 
-  renderResults(companiesArray) {
+  onCompare(callback) {
+    this.compareCallback = callback;
+  }
+
+  renderResults(companiesArray, query, handleCompare) {
     this.stockListElement.innerHTML = "";
 
     if (!companiesArray || companiesArray.length === 0) {
@@ -32,11 +37,11 @@ export class SearchResult {
 
       const nameSpan = document.createElement("span");
       nameSpan.classList.add("company-name");
-      nameSpan.textContent = company.name;
+      nameSpan.innerHTML = this.highlightMatch(company.name, query);
 
       const symbolSpan = document.createElement("span");
       symbolSpan.classList.add("company-symbol");
-      symbolSpan.textContent = ` (${company.symbol})`;
+      symbolSpan.innerHTML = ` (${this.highlightMatch(company.symbol, query)})`;
 
       link.appendChild(nameSpan);
       link.appendChild(symbolSpan);
@@ -52,11 +57,34 @@ export class SearchResult {
 
       changeSpan.textContent = `(${company.changesPercentage})`;
 
+      const compareBtn = document.createElement("button");
+      compareBtn.textContent = "Compare";
+      compareBtn.classList.add("compare-btn");
+
+      compareBtn.addEventListener("click", () => {
+        handleCompare(company, compareBtn);
+      });
+
       li.appendChild(img);
       li.appendChild(link);
       li.appendChild(changeSpan);
+      li.appendChild(compareBtn);
 
       this.stockListElement.appendChild(li);
     });
+  }
+
+  highlightMatch(text, query) {
+    const lowerText = text.toLowerCase();
+    const lowerQuery = query.toLowerCase();
+
+    if (lowerText.startsWith(lowerQuery)) {
+      const matchLength = query.length;
+      const highlightedPart = text.substring(0, matchLength);
+      const rest = text.substring(matchLength);
+      return `<span class="highlight">${highlightedPart}</span>${rest}`;
+    }
+
+    return text;
   }
 }

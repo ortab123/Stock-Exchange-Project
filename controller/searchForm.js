@@ -35,8 +35,7 @@ export class SearchForm {
           });
         }
       }
-      console.log("Results ready:", enrichedResults);
-      callback(enrichedResults);
+      callback(enrichedResults, query);
     });
   }
 
@@ -51,11 +50,13 @@ export class SearchForm {
         { symbol: "TSLA", name: "Tesla Inc." },
       ];
 
-      return allCompanies.filter(
-        (company) =>
-          company.name.toLowerCase().includes(query.toLowerCase()) ||
-          company.symbol.toLowerCase().includes(query.toLowerCase())
-      );
+      return allCompanies.filter((company) => {
+        const queryLower = query.toLowerCase();
+        return (
+          company.name.toLowerCase().startsWith(queryLower) ||
+          company.symbol.toLowerCase().startsWith(queryLower)
+        );
+      });
     }
 
     // const res = await fetch(

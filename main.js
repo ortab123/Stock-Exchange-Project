@@ -4,6 +4,26 @@ import { Marquee } from "./controller/marquee.js";
 import { mockCompanies } from "./models/mockData.js";
 // import { API_KEY } from "./secret.js";
 
+const comparedStocks = new Set();
+
+function handleCompare(company, buttonElement) {
+  const isCompared = comparedStocks.has(company.symbol);
+
+  if (isCompared) {
+    comparedStocks.delete(company.symbol);
+    buttonElement.textContent = "Compare";
+    buttonElement.classList.remove("active");
+    console.log("Removed from comparison:", company);
+  } else {
+    comparedStocks.add(company.symbol);
+    buttonElement.textContent = "Remove";
+    buttonElement.classList.add("active");
+    console.log("Added to comparison:", company);
+  }
+
+  console.log("Current compared stocks:", [...comparedStocks]);
+}
+
 (async function () {
   const marquee = new Marquee(document.getElementById("marquee"));
   await marquee.loadAndRender();
@@ -11,8 +31,8 @@ import { mockCompanies } from "./models/mockData.js";
   const form = new SearchForm(document.getElementById("form"));
   const results = new SearchResult(document.getElementById("results"));
 
-  form.onSearch((companies) => {
-    results.renderResults(companies);
+  form.onSearch((companies, query) => {
+    results.renderResults(companies, query, handleCompare);
   });
 })();
 
