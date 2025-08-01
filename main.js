@@ -4,18 +4,17 @@ import { Marquee } from "./controller/marquee.js";
 import { mockCompanies } from "./models/mockData.js";
 // import { API_KEY } from "./secret.js";
 
-const form = new SearchForm(document.getElementById("form"));
-const results = new SearchResult(document.getElementById("results"));
-const loadingElement = document.getElementById("loading");
+(async function () {
+  const marquee = new Marquee(document.getElementById("marquee"));
+  await marquee.loadAndRender();
 
-const marquee = new Marquee(document.getElementById("marquee"));
-marquee.loadAndRender();
+  const form = new SearchForm(document.getElementById("form"));
+  const results = new SearchResult(document.getElementById("results"));
 
-form.onSearch((companies) => {
-  loadingElement.style.display = "block";
-  results.renderResults(companies);
-  loadingElement.style.display = "none";
-});
+  form.onSearch((companies) => {
+    results.renderResults(companies);
+  });
+})();
 
 // form.onSearch(async (query) => {
 //   try {

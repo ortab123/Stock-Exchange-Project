@@ -5,6 +5,11 @@ const USE_MOCK = true;
 export class SearchForm {
   constructor(containerElement) {
     this.containerElement = containerElement;
+
+    this.containerElement.innerHTML = `
+      <input type="text" id="inputField" placeholder="Search your stock" />
+      <button id="searchButton">Search</button>
+    `;
     this.inputElement = containerElement.querySelector("#inputField");
     this.buttomElement = containerElement.querySelector("#searchButton");
   }
@@ -46,7 +51,6 @@ export class SearchForm {
         { symbol: "TSLA", name: "Tesla Inc." },
       ];
 
-      // מסנן לפי החיפוש
       return allCompanies.filter(
         (company) =>
           company.name.toLowerCase().includes(query.toLowerCase()) ||

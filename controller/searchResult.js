@@ -1,7 +1,10 @@
 export class SearchResult {
   constructor(containerElement) {
     this.containerElement = containerElement;
-    this.stockListElement = containerElement.querySelector("#stockList");
+
+    this.stockListElement = document.createElement("ul");
+    this.stockListElement.id = "stockList";
+    this.containerElement.appendChild(this.stockListElement);
   }
 
   renderResults(companiesArray) {
