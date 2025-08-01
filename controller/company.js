@@ -66,8 +66,8 @@ const USE_MOCK = true;
           {
             label: `${symbol} stock price`,
             data: prices,
-            borderColor: "#2980b9",
-            backgroundColor: "rgba(52, 152, 219, 0.1)",
+            borderColor: "#7FCDCD",
+            backgroundColor: "rgba(127, 205, 205, 0.1)",
             fill: true,
             tension: 0.3,
             pointRadius: 2,

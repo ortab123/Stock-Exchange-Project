@@ -83,4 +83,17 @@ export const mockHistorical = {
       { date: "2024-07-09", close: 198.23 },
     ],
   },
+  TSLA: {
+    historical: [
+      { date: "2024-07-01", close: 650.5 },
+      { date: "2024-07-02", close: 658.9 },
+      { date: "2024-07-03", close: 670.1 },
+      { date: "2024-07-04", close: 680.4 },
+      { date: "2024-07-05", close: 689.3 },
+      { date: "2024-07-06", close: 695.2 },
+      { date: "2024-07-07", close: 698.8 },
+      { date: "2024-07-08", close: 700.9 },
+      { date: "2024-07-09", close: 701.32 },
+    ],
+  },
 };
