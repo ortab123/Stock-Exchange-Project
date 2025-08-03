@@ -244,4 +244,17 @@ export const mockHistorical = {
       { date: "2024-07-09", close: 132.5 },
     ],
   },
+  GOOGL: {
+    historical: [
+      { date: "2024-07-01", close: 126.2 },
+      { date: "2024-07-02", close: 127.0 },
+      { date: "2024-07-03", close: 128.4 },
+      { date: "2024-07-04", close: 130.3 },
+      { date: "2024-07-05", close: 132.1 },
+      { date: "2024-07-06", close: 133.9 },
+      { date: "2024-07-07", close: 132.8 },
+      { date: "2024-07-08", close: 132.4 },
+      { date: "2024-07-09", close: 132.5 },
+    ],
+  },
 };

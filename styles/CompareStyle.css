@@ -1,0 +1,71 @@
+/* body {
+  font-family: Arial, sans-serif;
+  background-color: #f9f9f9;
+  padding: 30px;
+}
+*/
+
+#compare-container {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 30px;
+}
+
+.compare-card {
+  width: 460px;
+  background-color: white;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
+}
+
+.top-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.company-logo {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+}
+
+.symbol {
+  font-weight: bold;
+  color: #555;
+}
+
+.price-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.price {
+  font-size: 1.1em;
+  font-weight: bold;
+}
+
+.percentage.green {
+  color: green;
+}
+
+.percentage.red {
+  color: red;
+}
+
+.description {
+  margin-top: 15px;
+  font-size: 0.95em;
+  color: #333;
+}
+
+.stock-chart {
+  margin-top: 20px;
+  width: 100%;
+  height: 200px;
+}
