@@ -49,7 +49,10 @@ export class SearchResult {
       const changeSpan = document.createElement("span");
       changeSpan.classList.add("stock-change");
 
-      if (company.changesPercentage.includes("-")) {
+      if (
+        company.changesPercentage &&
+        company.changesPercentage.includes("-")
+      ) {
         changeSpan.classList.add("red");
       } else {
         changeSpan.classList.add("green");

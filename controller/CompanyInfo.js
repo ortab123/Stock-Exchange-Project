@@ -1,0 +1,167 @@
+import { getCompanyProfile, getHistoricalData } from "../models/model.js";
+import { API_KEY } from "../secret.js";
+
+const USE_MOCK = true;
+
+export class CompanyInfo {
+  constructor(containerElement, symbol) {
+    this.containerElement = containerElement;
+    this.symbol = symbol;
+    this.profile = null;
+    this.histData = null;
+  }
+
+  async load() {
+    if (!this.symbol) {
+      this.containerElement.textContent = "No symbol provided.";
+      return;
+    }
+
+    this.containerElement.textContent = "Loading company info...";
+
+    try {
+      this.profile = await getCompanyProfile(this.symbol, USE_MOCK);
+      this.histData = await getHistoricalData(this.symbol, USE_MOCK);
+
+      this.containerElement.innerHTML = `
+        <div class="company-container">
+          <div class="company-header">
+            <img src="${this.profile.image}" alt="${
+        this.profile.companyName
+      }" class="company-logo" />
+            <h1 class="company-name">
+              <a href="${this.profile.website}" target="_blank">${
+        this.profile.companyName
+      }</a>
+            </h1>
+          </div>
+
+          <div class="stock-info">
+            <p class="stock-price">Stock price: $${this.profile.price}</p>
+            <p class="stock-change ${
+              this.profile.changesPercentage.includes("-")
+                ? "negative"
+                : "positive"
+            }">(${this.profile.changesPercentage})</p>
+          </div>
+
+          <p class="company-description">${this.profile.description}</p>
+        </div>
+      `;
+    } catch (err) {
+      this.containerElement.textContent = "Failed to load company data.";
+      console.error(err);
+    }
+  }
+
+  async addChart() {
+    if (!this.histData?.historical) return;
+
+    const sortedData = [...this.histData.historical].sort(
+      (a, b) => new Date(a.date) - new Date(b.date)
+    );
+
+    const labels = sortedData.map((p) => p.date);
+    const prices = sortedData.map((p) => p.close);
+
+    const canvas = document.createElement("canvas");
+    this.containerElement.appendChild(canvas);
+
+    new Chart(canvas, {
+      type: "line",
+      data: {
+        labels,
+        datasets: [
+          {
+            label: `${this.symbol} stock price`,
+            data: prices,
+            borderColor: "#7FCDCD",
+            backgroundColor: "rgba(127, 205, 205, 0.1)",
+            fill: true,
+            tension: 0.3,
+            pointRadius: 2,
+          },
+        ],
+      },
+    });
+  }
+}
+
+// (async function () {
+//   const param = new URLSearchParams(location.search);
+//   const symbol = param.get("symbol");
+//   const container = document.getElementById("compInfo");
+
+//   if (!symbol) {
+//     container.textContent = "No symbol provided.";
+//     return;
+//   }
+
+//   container.textContent = "Loading company info...";
+
+//   try {
+//     const profile = await getCompanyProfile(symbol, USE_MOCK);
+//     const histData = await getHistoricalData(symbol, USE_MOCK);
+//     // const res = await fetch(`https://financialmodelingprep.com/api/v3/profile/${symbol}?apikey=${API_KEY}`);
+//     // const data = await res.json();
+//     // const profile = data[0];
+
+//     container.innerHTML = `
+//     <div class="company-container">
+
+//         <div class="company-header">
+//             <img src="${profile.image}" alt="${
+//       profile.companyName
+//     }" class="company-logo" />
+//             <h1 class="company-name">
+//                 <a href="${profile.website}" target="_blank">${
+//       profile.companyName
+//     }</a>
+//             </h1>
+//         </div>
+
+//         <div class="stock-info">
+//         <p class="stock-price">Stock price: $${profile.price}</p>
+//         <p class="stock-change ${
+//           profile.changesPercentage.includes("-") ? "negative" : "positive"
+//         }">
+//     (${profile.changesPercentage})
+//         </p>
+//         </div>
+
+//         <p class="company-description">${profile.description}</p>
+//     </div>
+//     `;
+
+//     // const histRes = await fetch(`https://financialmodelingprep.com/api/v3/historical-price-full/${symbol}?serietype=line&apikey=${API_KEY}`);
+//     // const histData = await histRes.json();
+//     const sortedData = [...histData.historical].sort(
+//       (a, b) => new Date(a.date) - new Date(b.date)
+//     );
+//     const labels = sortedData.map((point) => point.date);
+//     const prices = sortedData.map((point) => point.close);
+//     const canvas = document.createElement("canvas");
+//     container.appendChild(canvas);
+
+//     new Chart(canvas, {
+//       type: "line",
+//       data: {
+//         labels,
+//         datasets: [
+//           {
+//             label: `${symbol} stock price`,
+//             data: prices,
+//             borderColor: "#7FCDCD",
+//             backgroundColor: "rgba(127, 205, 205, 0.1)",
+//             fill: true,
+//             tension: 0.3,
+//             pointRadius: 2,
+//           },
+//         ],
+//       },
+//     });
+//   } catch (err) {
+//     container.textContent = "Failed to load company data.";
+//     console.error(err);
+//   }
+// })();

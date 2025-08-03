@@ -1,23 +1,26 @@
 import { SearchForm } from "./controller/searchForm.js";
 import { SearchResult } from "./controller/searchResult.js";
 import { Marquee } from "./controller/marquee.js";
+import { ComparisonList } from "./controller/comparisonList.js";
+
 import { mockCompanies } from "./models/mockData.js";
 // import { API_KEY } from "./secret.js";
+
+const comparisonList = new ComparisonList(
+  document.getElementById("comparison-bar")
+);
 
 const comparedStocks = new Set();
 
 function handleCompare(company, buttonElement) {
-  const isCompared = comparedStocks.has(company.symbol);
-
-  if (isCompared) {
+  if (comparedStocks.has(company.symbol)) {
     comparedStocks.delete(company.symbol);
-    buttonElement.textContent = "Compare";
     buttonElement.classList.remove("active");
     console.log("Removed from comparison:", company);
   } else {
     comparedStocks.add(company.symbol);
-    buttonElement.textContent = "Remove";
     buttonElement.classList.add("active");
+    comparisonList.add(company.symbol);
     console.log("Added to comparison:", company);
   }
 

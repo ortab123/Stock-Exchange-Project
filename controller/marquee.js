@@ -14,9 +14,9 @@ export class Marquee {
 
   async loadAndRender() {
     try {
-      const res = await fetch(
-        `https://financialmodelingprep.com/api/v3/actives?apikey=${API_KEY}`
-      );
+      // const res = await fetch(
+      //   `https://financialmodelingprep.com/api/v3/actives?apikey=${API_KEY}`
+      // );
 
       if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
 

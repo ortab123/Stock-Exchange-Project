@@ -1,4 +1,5 @@
 import { getCompanyProfile } from "../models/model.js";
+import { API_KEY } from "../secret.js";
 
 const USE_MOCK = true;
 
@@ -22,18 +23,27 @@ export class SearchForm {
       }
 
       const searchResults = await this.getSearchResults(query);
+      console.log("Raw search results:", searchResults);
+      if (!searchResults || searchResults.length === 0) {
+        console.warn("No search results from API");
+        return;
+      }
       const enrichedResults = [];
 
       for (const result of searchResults) {
         const profile = await getCompanyProfile(result.symbol, USE_MOCK);
-        if (profile) {
-          enrichedResults.push({
-            image: profile.image,
-            name: result.name,
-            symbol: result.symbol,
-            changesPercentage: profile.changesPercentage,
-          });
+
+        if (!profile) {
+          console.warn(`No profile found for symbol: ${result.symbol}`);
+          continue;
         }
+
+        enrichedResults.push({
+          image: profile.image || "fallback.png",
+          name: result.name,
+          symbol: result.symbol,
+          changesPercentage: profile.changesPercentage,
+        });
       }
       callback(enrichedResults, query);
     });
