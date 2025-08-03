@@ -1,3 +1,5 @@
+import { highlightMatch } from "../utiles/utiles.js";
+
 export class SearchResult {
   constructor(containerElement) {
     this.containerElement = containerElement;
@@ -37,11 +39,11 @@ export class SearchResult {
 
       const nameSpan = document.createElement("span");
       nameSpan.classList.add("company-name");
-      nameSpan.innerHTML = this.highlightMatch(company.name, query);
+      nameSpan.innerHTML = highlightMatch(company.name, query);
 
       const symbolSpan = document.createElement("span");
       symbolSpan.classList.add("company-symbol");
-      symbolSpan.innerHTML = ` (${this.highlightMatch(company.symbol, query)})`;
+      symbolSpan.innerHTML = ` (${highlightMatch(company.symbol, query)})`;
 
       link.appendChild(nameSpan);
       link.appendChild(symbolSpan);
@@ -51,6 +53,7 @@ export class SearchResult {
 
       if (
         company.changesPercentage &&
+        typeof company.changesPercentage === "string" &&
         company.changesPercentage.includes("-")
       ) {
         changeSpan.classList.add("red");
@@ -75,19 +78,5 @@ export class SearchResult {
 
       this.stockListElement.appendChild(li);
     });
-  }
-
-  highlightMatch(text, query) {
-    const lowerText = text.toLowerCase();
-    const lowerQuery = query.toLowerCase();
-
-    if (lowerText.startsWith(lowerQuery)) {
-      const matchLength = query.length;
-      const highlightedPart = text.substring(0, matchLength);
-      const rest = text.substring(matchLength);
-      return `<span class="highlight">${highlightedPart}</span>${rest}`;
-    }
-
-    return text;
   }
 }

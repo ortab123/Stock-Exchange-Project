@@ -1,4 +1,10 @@
-import { mockProfile, mockHistorical } from "../models/mockData.js";
+// import { mockProfile, mockHistorical } from "../models/mockData.js";
+import {
+  calculatePercentageChange,
+  renderStockChart,
+  createCompareCard,
+} from "../utiles/utiles.js";
+import { getCompanyProfile, getHistoricalData } from "../models/model.js";
 
 const urlParams = new URLSearchParams(window.location.search);
 const symbolsParam = urlParams.get("symbols");
@@ -12,31 +18,18 @@ const selectedSymbols = symbols.slice(0, 3);
 
 const container = document.getElementById("compare-container");
 
-selectedSymbols.forEach((symbol) => {
-  const company = mockProfile[symbol];
-  const histData = mockHistorical[symbol];
+for (const symbol of selectedSymbols) {
+  const company = await getCompanyProfile(symbol, false);
+  const histData = await getHistoricalData(symbol, false);
 
-  if (!company || !histData) return;
+  if (!company || !histData) continue;
 
-  const card = document.createElement("div");
-  card.classList.add("compare-card");
+  const percentChange = calculatePercentageChange(
+    company.changes,
+    company.price
+  );
 
-  card.innerHTML = `
-    <div class="top-row">
-      <img src="${company.image}" alt="${symbol}" class="company-logo">
-<a href="${company.website}" target="_blank" class="company-name">${
-    company.companyName
-  }</a>      <span class="symbol">(${symbol})</span>
-    </div>
-    <div class="price-row">
-      <h4>Stock Price:</h4>
-      <span class="price">$${company.price}</span>
-      <span class="percentage ${
-        company.changesPercentage.includes("-") ? "red" : "green"
-      }">(${company.changesPercentage})</span>
-    </div>
-    <p class="description">${company.description}</p>
-  `;
+  const card = createCompareCard({ ...company, symbol }, percentChange);
 
   const canvas = document.createElement("canvas");
   canvas.classList.add("stock-chart");
@@ -51,21 +44,5 @@ selectedSymbols.forEach((symbol) => {
   const labels = sortedData.map((p) => p.date);
   const prices = sortedData.map((p) => p.close);
 
-  new Chart(canvas, {
-    type: "line",
-    data: {
-      labels,
-      datasets: [
-        {
-          label: `${symbol} stock price`,
-          data: prices,
-          borderColor: "#7FCDCD",
-          backgroundColor: "rgba(127, 205, 205, 0.1)",
-          fill: true,
-          tension: 0.3,
-          pointRadius: 2,
-        },
-      ],
-    },
-  });
-});
+  renderStockChart(canvas, labels, prices, symbol);
+}

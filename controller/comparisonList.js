@@ -1,3 +1,5 @@
+import { createSymbolButton } from "../utiles/utiles.js";
+
 export class ComparisonList {
   constructor(containerElement) {
     this.containerElement = containerElement;
@@ -41,17 +43,10 @@ export class ComparisonList {
     this.symbolsContainer.innerHTML = "";
 
     this.selectedSymbols.forEach((symbol) => {
-      const btn = document.createElement("button");
-      btn.innerHTML = `${symbol} <span class="remove-x">×</span>`;
-      btn.classList.add("symbol-btn");
-
-      btn.querySelector(".remove-x").addEventListener("click", (e) => {
-        e.stopPropagation();
-        this.remove(symbol);
-      });
-
+      const btn = createSymbolButton(symbol, this.remove.bind(this));
       this.symbolsContainer.appendChild(btn);
     });
+
     this.compareBtn.textContent = `Compare ${this.selectedSymbols.size} ${
       this.selectedSymbols.size === 1 ? "company" : "companies"
     }`;

@@ -90,11 +90,14 @@ body {
 }
 
 .company-logo {
-  width: 40px;
-  height: 40px;
+  background-color: #f2f2f2;
+  padding: 8px;
+  border-radius: 12px;
+  width: 50px;
+  height: 50px;
   object-fit: contain;
-  border-radius: 4px;
-  background-color: #fff;
+  border: 1px solid #ccc;
+  display: inline-block;
 }
 
 .company-link {
@@ -223,4 +226,14 @@ body {
   border-radius: 8px;
   font-size: 16px;
   cursor: pointer;
+}
+
+.company-logo {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+  border-radius: 4px;
+  background-color: #f8f9fa;
+  border: 1px solid #dee2e6;
+  transition: all 0.2s ease;
 }

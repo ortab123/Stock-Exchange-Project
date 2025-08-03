@@ -3,9 +3,6 @@ import { SearchResult } from "./controller/searchResult.js";
 import { Marquee } from "./controller/marquee.js";
 import { ComparisonList } from "./controller/comparisonList.js";
 
-import { mockCompanies } from "./models/mockData.js";
-// import { API_KEY } from "./secret.js";
-
 const comparisonList = new ComparisonList(
   document.getElementById("comparison-bar")
 );
@@ -38,23 +35,3 @@ function handleCompare(company, buttonElement) {
     results.renderResults(companies, query, handleCompare);
   });
 })();
-
-// form.onSearch(async (query) => {
-//   try {
-//     loadingElement.style.display = "block";
-
-//     const response = await fetch(
-//       `https://financialmodelingprep.com/api/v3/search?query=${query}&limit=10&exchange=NASDAQ&apikey=${API_KEY}`
-//     );
-
-//     if (!response.ok) throw new Error("API error");
-
-//     const data = await response.json();
-//     results.renderResults(data);
-//   } catch (err) {
-//     results.renderResults([]);
-//     console.error("Search error:", err);
-//   } finally {
-//     loadingElement.style.display = "none";
-//   }
-// });

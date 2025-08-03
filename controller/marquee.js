@@ -1,3 +1,4 @@
+import { createMarqueeItems } from "../utiles/utiles.js";
 import { API_KEY } from "../secret.js";
 
 export class Marquee {
@@ -23,22 +24,7 @@ export class Marquee {
       const data = await res.json();
       const topStocks = data.slice(0, 30);
 
-      this.contentElement.innerHTML = topStocks
-        .map((stock) => {
-          const price = Number(stock.price).toFixed(2);
-          const change = stock.changesPercentage;
-          const colorClass = change.includes("-")
-            ? "marquee-red"
-            : "marquee-green";
-
-          return `
-            <span class="marquee-item">
-              ${stock.ticker}: $${price}
-              <span class="${colorClass}">${change}</span>
-            </span>
-          `;
-        })
-        .join("");
+      this.contentElement.innerHTML = createMarqueeItems(topStocks);
     } catch (err) {
       console.error("Failed to load marquee data:", err);
       this.contentElement.textContent = "Failed to load stock data.";

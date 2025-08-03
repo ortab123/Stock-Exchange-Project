@@ -1,7 +1,8 @@
 import { getCompanyProfile } from "../models/model.js";
+import { calculatePercentageChange } from "../utiles/utiles.js";
 import { API_KEY } from "../secret.js";
 
-const USE_MOCK = true;
+const USE_MOCK = false;
 
 export class SearchForm {
   constructor(containerElement) {
@@ -28,21 +29,29 @@ export class SearchForm {
         console.warn("No search results from API");
         return;
       }
+
       const enrichedResults = [];
 
       for (const result of searchResults) {
-        const profile = await getCompanyProfile(result.symbol, USE_MOCK);
+        const profile = await getCompanyProfile(result.symbol, false);
 
         if (!profile) {
           console.warn(`No profile found for symbol: ${result.symbol}`);
           continue;
         }
 
+        console.log(`Full profile for ${result.symbol}:`, profile);
+
+        const percentChange = calculatePercentageChange(
+          profile.changes,
+          profile.price
+        );
+
         enrichedResults.push({
-          image: profile.image || "fallback.png",
+          image: profile.image,
           name: result.name,
           symbol: result.symbol,
-          changesPercentage: profile.changesPercentage,
+          changesPercentage: percentChange,
         });
       }
       callback(enrichedResults, query);
@@ -70,7 +79,7 @@ export class SearchForm {
     }
 
     // const res = await fetch(
-    //   `https://financialmodelingprep.com/api/v3/search?query=${query}&limit=10&exchange=NASDAQ&apikey=${API_KEY}`
+    //   `https://financialmodelingprep.com/api/v3/search?query=${query}&limit=3&exchange=NASDAQ&apikey=${API_KEY}`
     // );
     // return await res.json();
   }
