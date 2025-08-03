@@ -1,4 +1,4 @@
-import { CompanyInfo } from "./controller/CompanyInfo.js";
+import { CompanyInfo } from "./controller/companyInfo.js";
 
 (async function () {
   const params = new URLSearchParams(location.search);
