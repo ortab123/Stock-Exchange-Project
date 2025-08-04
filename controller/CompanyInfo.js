@@ -3,10 +3,10 @@ import {
   calculatePercentageChange,
   renderStockChart,
   createCompanyCard,
-} from "../utiles/utiles.js";
-import { API_KEY } from "../secret.js";
+} from "../utils/utils.js";
 
-const USE_MOCK = false;
+//To unuse mock declare USE_MOCK = false
+const USE_MOCK = true;
 
 export class CompanyInfo {
   constructor(containerElement, symbol) {
@@ -22,8 +22,6 @@ export class CompanyInfo {
       return;
     }
 
-    //this.containerElement.textContent = "Loading company info...";
-
     try {
       this.profile = await getCompanyProfile(this.symbol, USE_MOCK);
       this.histData = await getHistoricalData(this.symbol, USE_MOCK);
@@ -32,7 +30,6 @@ export class CompanyInfo {
         throw new Error(`No profile found for symbol: ${this.symbol}`);
       }
 
-      //console.log("Loaded profile:", this.profile);
       const rawChange = this.profile.changes;
       const currentPrice = this.profile.price;
 

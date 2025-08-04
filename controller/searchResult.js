@@ -1,4 +1,4 @@
-import { highlightMatch } from "../utiles/utiles.js";
+import { highlightMatch } from "../utils/utils.js";
 
 export class SearchResult {
   constructor(containerElement) {

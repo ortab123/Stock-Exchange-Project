@@ -1,9 +1,8 @@
-// import { mockProfile, mockHistorical } from "../models/mockData.js";
 import {
   calculatePercentageChange,
   renderStockChart,
   createCompareCard,
-} from "../utiles/utiles.js";
+} from "../utils/utils.js";
 import { getCompanyProfile, getHistoricalData } from "../models/model.js";
 
 const urlParams = new URLSearchParams(window.location.search);
@@ -15,7 +14,6 @@ if (symbols.length > 3) {
 }
 
 const selectedSymbols = symbols.slice(0, 3);
-
 const container = document.getElementById("compare-container");
 
 for (const symbol of selectedSymbols) {

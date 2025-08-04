@@ -1,7 +1,9 @@
 import { API_KEY } from "../secret.js";
 import { mockProfile, mockHistorical } from "./mockData.js";
 
-export async function getCompanyProfile(symbol, useMock = false) {
+//To unuse mock declare USE_MOCK = false
+//Uncomment fetch
+export async function getCompanyProfile(symbol, useMock = true) {
   if (useMock) {
     return mockProfile[symbol];
   }
@@ -13,7 +15,7 @@ export async function getCompanyProfile(symbol, useMock = false) {
   // return data[0];
 }
 
-export async function getHistoricalData(symbol, useMock = false) {
+export async function getHistoricalData(symbol, useMock = true) {
   if (useMock) {
     return mockHistorical[symbol];
   }

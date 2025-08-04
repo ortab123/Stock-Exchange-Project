@@ -1,8 +1,10 @@
 import { getCompanyProfile } from "../models/model.js";
-import { calculatePercentageChange } from "../utiles/utiles.js";
+import { calculatePercentageChange } from "../utils/utils.js";
 import { API_KEY } from "../secret.js";
 
-const USE_MOCK = false;
+//To unuse mock declare USE_MOCK = false
+//Uncomment fetch
+const USE_MOCK = true;
 
 export class SearchForm {
   constructor(containerElement) {
@@ -24,7 +26,6 @@ export class SearchForm {
       }
 
       const searchResults = await this.getSearchResults(query);
-      console.log("Raw search results:", searchResults);
       if (!searchResults || searchResults.length === 0) {
         console.warn("No search results from API");
         return;
@@ -79,7 +80,7 @@ export class SearchForm {
     }
 
     // const res = await fetch(
-    //   `https://financialmodelingprep.com/api/v3/search?query=${query}&limit=3&exchange=NASDAQ&apikey=${API_KEY}`
+    //   `https://financialmodelingprep.com/api/v3/search?query=${query}&limit=1&exchange=NASDAQ&apikey=${API_KEY}`
     // );
     // return await res.json();
   }

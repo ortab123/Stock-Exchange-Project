@@ -1,4 +1,4 @@
-import { createSymbolButton } from "../utiles/utiles.js";
+import { createSymbolButton } from "../utils/utils.js";
 
 export class ComparisonList {
   constructor(containerElement) {
@@ -6,10 +6,8 @@ export class ComparisonList {
     this.selectedSymbols = new Set();
 
     this.containerElement.classList.add("comparison-bar");
-
     this.symbolsContainer = document.createElement("div");
     this.symbolsContainer.classList.add("symbols-container");
-
     this.compareBtn = document.createElement("button");
     this.compareBtn.classList.add("compare-final-btn");
 

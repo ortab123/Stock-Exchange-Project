@@ -1,15 +1,14 @@
-import { createMarqueeItems } from "../utiles/utiles.js";
+import { createMarqueeItems } from "../utils/utils.js";
 import { API_KEY } from "../secret.js";
 
+//To see marquee Uncomment fetch
 export class Marquee {
   constructor(containerElement) {
     this.containerElement = containerElement;
     this.containerElement.classList.add("marquee-container");
-
     this.contentElement = document.createElement("div");
     this.contentElement.id = "marquee-content";
     this.contentElement.classList.add("marquee-content");
-
     this.containerElement.appendChild(this.contentElement);
   }
 
