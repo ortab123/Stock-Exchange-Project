@@ -8,6 +8,7 @@ StockView is a modern web application that allows users to **search**, **view**,
 
 ## 🗂️ Project Structure
 
+```
 📁 controller
 ├── companyInfo.js # Displays full company info
 ├── compare.js # Handles comparison logic
@@ -38,8 +39,7 @@ StockView is a modern web application that allows users to **search**, **view**,
 📄 companyMain.js # Loads company page
 📄 secret.js # Your API key (not committed)
 📄 .gitignore # Ignores secret.js, node_modules, etc.
-
----
+```
 
 ## 🌟 Features
 
